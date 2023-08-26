@@ -8,21 +8,26 @@
 # - Eu digito qual a pasta que eu quero procurar.
 # - A lista pode ser gerada num arquivo TXT.
 # imports
+import os
+
 import PyPDF2
 
-path = "bitcoin_pt.pdf"
-pdf_file = open(path)
 
-data = PyPDF2.PdfFileReader(pdf_file)
-
-
-"""
 def main():
-    
+    zetto = input("Digite o caminho da pasta: ")
+    word = input("Digite a palavra desejada: ")
+    paths = os.listdir(rf'{zetto}')
+    for i in paths:
+        if i.endswith('.pdf'):
+            word_search(word, i)
 
 
+def word_search(word, pdf):
+    reader = PyPDF2.PdfReader(pdf)
+    text = ""
+    for page in reader.pages:
+        text += page.extract_text()
+    print("tem: " + pdf) if word in text else print("Não tem:" + pdf)
 
-def word_search():
 
-
-main()"""
+main()

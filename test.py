@@ -1,30 +1,23 @@
-# import packages
-import re
+import os
 
 import PyPDF2
 
-# open the pdf file
-reader = PyPDF2.PdfReader("bitcoin_pt.pdf")
 
-# define key terms
-
-# extract text and do the search
+def main():
+    zetto = input("Digite o caminho da pasta: ")
+    word = input("Digite a palavra desejada: ")
+    paths = os.listdir(rf'{zetto}')
+    for i in paths:
+        if i.endswith('.pdf'):
+            word_search(word, i)
 
 
 def word_search(word, pdf):
-    find = []
-    found = []
     reader = PyPDF2.PdfReader(pdf)
+    text = ""
     for page in reader.pages:
-        text = page.extract_text()
-        # print(text)
-        res_search = re.search(word, text)
-        find.append(res_search)
-        for i in find:
-            if i == word:
-                found.append(i)
-    print(len(find))
-    print(len(found))
+        text += page.extract_text()
+    print("tem: " + pdf) if word in text else print("Não tem:" + pdf)
 
 
-word_search("Uma", "bitcoin_pt.pdf")
+main()
