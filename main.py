@@ -13,21 +13,25 @@ import os
 import PyPDF2
 
 
+# Programa principal
 def main():
+    result = []
     zetto = input("Digite o caminho da pasta: ")
     word = input("Digite a palavra desejada: ")
     paths = os.listdir(rf'{zetto}')
     for i in paths:
         if i.endswith('.pdf'):
-            word_search(word, i)
+            with open("Resultado.txt", "w") as arquivo:
+                arquivo.write("\n".join(word_search(word, i, result)))
 
-
-def word_search(word, pdf):
+# Função de busca de palavras
+def word_search(word=str, pdf=str, have=list):
     reader = PyPDF2.PdfReader(pdf)
     text = ""
     for page in reader.pages:
         text += page.extract_text()
-    print("tem: " + pdf) if word in text else print("Não tem:" + pdf)
+    have.append(pdf) if word.lower() in text.lower() else None
+    return have
 
 
 main()
